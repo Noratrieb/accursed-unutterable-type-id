@@ -106,9 +106,29 @@ mod __doctest {
     /// use accursed_unutterable_type_id::AccursedUnutterablyTypeIdentified;
     ///
     /// #[derive(AccursedUnutterablyTypeIdentified)]
-    /// struct Uwu<'a, T, const N: usize> {
-    ///     _x: &'a [T; N],
+    /// struct Uwu<T: 'static, const N: usize> {
+    ///     _x: [T; N],
     /// }
     /// ```
     mod complex {}
+
+    /// ```
+    /// use accursed_unutterable_type_id::AccursedUnutterablyTypeIdentified;
+    ///
+    /// #[derive(AccursedUnutterablyTypeIdentified)]
+    /// struct Uwu<T> {
+    ///     _x: T,
+    /// }
+    /// ```
+    mod static_ty_param {}
+
+    /// ```
+    /// use accursed_unutterable_type_id::AccursedUnutterablyTypeIdentified;
+    ///
+    /// #[derive(AccursedUnutterablyTypeIdentified)]
+    /// struct Uwu<T> where T: Copy {
+    ///     _x: T,
+    /// }
+    /// ```
+    mod where_clause {}
 }

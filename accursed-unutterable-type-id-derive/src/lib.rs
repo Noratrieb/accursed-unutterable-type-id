@@ -1,9 +1,9 @@
-use std::{env, fs, fs::OpenOptions, io::Write, path::PathBuf};
+use std::{env, fs, path::PathBuf};
 
 use fslock::LockFile;
 use proc_macro::TokenStream;
-use quote::quote;
-use syn::{parse_macro_input, DeriveInput};
+use quote::{quote, ToTokens};
+use syn::{parse_macro_input, DeriveInput, GenericParam};
 
 const DEFAULT_LOCK_FILE_NAME: &str =
     "accursed-unutterable-type-id-global-store-oh-god-is-this-cursed-dont-touch-it-LOCK";
@@ -14,12 +14,6 @@ const DEFAULT_FILE_NAME: &str =
 #[proc_macro_derive(AccursedUnutterablyTypeIdentified)]
 pub fn my_macro(input: TokenStream) -> TokenStream {
     let input = parse_macro_input!(input as DeriveInput);
-
-    let mut logfile = OpenOptions::new()
-        .append(true)
-        .create(true)
-        .open("logfile.log")
-        .unwrap();
 
     let dir_path = match env::var("ACCURSED_UNUTTERABLE_TYPE_ID_DIR") {
         Ok(string) => PathBuf::from(string),
@@ -41,10 +35,7 @@ pub fn my_macro(input: TokenStream) -> TokenStream {
 
     let old = fs::read_to_string(&file_path).unwrap_or_else(|_| "0".to_string()); // lmao
 
-    writeln!(logfile, "read only value from file: {old}").ok();
     let old: u64 = old.trim().parse().unwrap_or(0); // highly dangerous indeed
-
-    writeln!(logfile, "using {old} as the old value").ok();
 
     let new_value = old
         .checked_add(1)
@@ -53,18 +44,33 @@ pub fn my_macro(input: TokenStream) -> TokenStream {
     fs::write(&file_path, new_value.to_string())
         .unwrap_or_else(|_| fail("failed to write new number"));
 
-    writeln!(logfile, "wrote new number to file {new_value}").ok();
-
     let _ = file.unlock();
 
     let name = input.ident;
-    let generics1 = input.generics.params.iter();
-    let generics2 = input.generics.params.iter();
+    let generics1 = input.generics.params.iter().map(|p| match p {
+        GenericParam::Type(ty) => {
+            if ty.bounds.is_empty() {
+                quote!(#ty: 'static)
+            } else {
+                quote!(#ty + 'static)
+            }
+        }
+        other => other.to_token_stream(),
+    });
+    let generics2 = input.generics.params.iter().map(|p| match p {
+        GenericParam::Const(const_param) => const_param.ident.to_token_stream(),
+        GenericParam::Type(ty) => ty.ident.to_token_stream(),
+        other => other.to_token_stream(),
+    });
+
+    let where_clause = input.generics.where_clause;
 
     // SAFETY: We literally are the proc macro. and we have made sure that no duplicate type ids
     // will ever happen, right? :ferrisClueless:
     let expanded = quote! {
-        unsafe impl<#(#generics1),*> ::accursed_unutterable_type_id::AccursedUnutterablyTypeIdentified for #name<#(#generics2),*> {
+        unsafe impl<#(#generics1),*> ::accursed_unutterable_type_id::AccursedUnutterablyTypeIdentified for #name<#(#generics2),*>
+        #where_clause
+        {
             fn type_id() -> ::accursed_unutterable_type_id::AccursedUnutterableTypeId {
                 ::accursed_unutterable_type_id::AccursedUnutterableTypeId::__internal_new(
                     ::accursed_unutterable_type_id::InternalAccursedUnutterableTypeId::__internal_new(
