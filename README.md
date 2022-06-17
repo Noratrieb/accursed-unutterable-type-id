@@ -3,7 +3,7 @@
 An accursed, unutterable type id.
 
 Once upon a time, back when time may not have been a human concept but only a vague idea among the
-wise, there was [`std::any::TypeId`].
+wise, there was `std::any::TypeId`.
 
 It was a good type, and many of these early inhabitants of planet earth were quite fond of it.
 Yet, there was a fundamental issue in it, that even the elders were not able to resolve: It
@@ -17,7 +17,7 @@ it had to be implemented using a derive macro (futuristic technology that the el
 dreamt of back then). Yet this change was accepted, and peace among the peoples ensured.
 
 Using it is as simple as slapping a derive macro on your type
-and then getting the type id using [`AccursedUnutterableTypeId::of`].
+and then getting the type id using `AccursedUnutterableTypeId::of`.
 
 ```rust
 use accursed_unutterable_type_id::{AccursedUnutterableTypeId, AccursedUnutterablyTypeIdentified};
