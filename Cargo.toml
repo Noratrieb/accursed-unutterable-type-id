@@ -6,6 +6,8 @@ name = "accursed-unutterable-type-id"
 description = "A worse version of std::any::TypeId"
 authors = ["Nilstrieb"]
 keywords = ["bad", "hack", "cursed"]
+repository = "https://github.com/Nilstrieb/accursed-unutterable-type-id"
+license = "MIT"
 version = "0.0.0-pre.cursed"
 edition = "2021"
 

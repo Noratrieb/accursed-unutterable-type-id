@@ -14,7 +14,18 @@
 //! it had to be implemented using a derive macro (futuristic technology that the elderly have only
 //! dreamt of back then). Yet this change was accepted, and peace among the peoples ensured.
 //!
-//! Using it is as simple as slapping a derive macro on your type.
+//! Using it is as simple as slapping a derive macro on your type
+//! and then getting the type id using [`AccursedUnutterableTypeId::of`].
+//!
+//! ```
+//! use accursed_unutterable_type_id::{AccursedUnutterableTypeId, AccursedUnutterablyTypeIdentified};
+//!
+//! #[derive(AccursedUnutterablyTypeIdentified)]
+//! struct Uwu;
+//!
+//! let type_id = AccursedUnutterableTypeId::of::<Uwu>();
+//! println!("{type_id:?}")
+//! ```
 
 use std::fmt::{Debug, Formatter};
 
@@ -36,7 +47,7 @@ pub unsafe trait AccursedUnutterablyTypeIdentified: 'static {
 ///
 /// It can easily be derived for your type. The derive is the only way to implement this trait.
 /// ```
-/// use accursed_unutterable_type_id::{AccursedUnutterableTypeId, AccursedUnutterablyTypeIdentified};
+/// use accursed_unutterable_type_id::AccursedUnutterablyTypeIdentified;
 ///
 /// #[derive(AccursedUnutterablyTypeIdentified)]
 /// struct Uwu;
