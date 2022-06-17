@@ -3,10 +3,13 @@ members = [".", "accursed-unutterable-type-id-derive"]
 
 [package]
 name = "accursed-unutterable-type-id"
-version = "0.1.0"
+description = "A worse version of std::any::TypeId"
+authors = ["Nilstrieb"]
+keywords = ["bad", "hack", "cursed"]
+version = "0.0.0-pre.cursed"
 edition = "2021"
 
 # See more keys and their definitions at https://doc.rust-lang.org/cargo/reference/manifest.html
 
 [dependencies]
-accursed-unutterable-type-id-derive = { path = "./accursed-unutterable-type-id-derive" }
+accursed-unutterable-type-id-derive = { path = "./accursed-unutterable-type-id-derive", version = "0.0.0-pre.cursed" }
