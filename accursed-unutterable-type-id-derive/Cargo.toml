@@ -9,5 +9,6 @@ proc-macro = true
 # See more keys and their definitions at https://doc.rust-lang.org/cargo/reference/manifest.html
 
 [dependencies]
+fslock = "0.2.1"
 quote = "1.0.18"
 syn = "1.0.96"
