@@ -1,6 +1,10 @@
 [package]
 name = "accursed-unutterable-type-id-derive"
 version = "0.0.0-pre.cursed"
+description = "derive macro for accursed-unutterable-type-id"
+authors = ["Nilstrieb"]
+license = "MIT"
+repository = "https://github.com/Nilstrieb/accursed-unutterable-type-id"
 edition = "2021"
 
 [lib]
