@@ -39,7 +39,7 @@ pub fn my_macro(input: TokenStream) -> TokenStream {
 
     let new_value = old
         .checked_add(1)
-        .unwrap_or_else(|| fail("integer overflow. you have too many derives"));
+        .unwrap_or_else(|| fail("integer overflow. use cargo clean. if the problem persists, you have way too many derives, the fuck"));
 
     fs::write(&file_path, new_value.to_string())
         .unwrap_or_else(|_| fail("failed to write new number"));
@@ -51,7 +51,7 @@ pub fn my_macro(input: TokenStream) -> TokenStream {
         GenericParam::Type(ty) => {
             let name = &ty.ident;
             let bounds = ty.bounds.iter();
-            quote!(#name: #(#bounds +)* 'static)
+            quote!(#name: #(#bounds +)* ::accursed_unutterable_type_id::AccursedUnutterablyTypeIdentified + 'static)
         }
         other => other.to_token_stream(),
     });
@@ -63,16 +63,38 @@ pub fn my_macro(input: TokenStream) -> TokenStream {
 
     let where_clause = input.generics.where_clause;
 
+    let ty_param_ids = input.generics.params.iter().filter_map(|p| match p {
+        GenericParam::Lifetime(_) => None,
+        GenericParam::Type(ty) => {
+            let name = &ty.ident;
+            Some(quote! {
+                ::accursed_unutterable_type_id::AccursedUnutterableTypeId::of::<#name>()
+            })
+        }
+        GenericParam::Const(_) => Some(quote!(compile_error!(
+            "const generics are not supported yet"
+        ))),
+    });
+
     // SAFETY: We literally are the proc macro. and we have made sure that no duplicate type ids
     // will ever happen, right? :ferrisClueless:
     let expanded = quote! {
         unsafe impl<#(#generics1),*> ::accursed_unutterable_type_id::AccursedUnutterablyTypeIdentified for #name<#(#generics2),*>
         #where_clause
         {
+            #[allow(unused_mut)]
             fn type_id() -> ::accursed_unutterable_type_id::AccursedUnutterableTypeId {
+                let mut hasher = ::std::collections::hash_map::DefaultHasher::new();
+
+                #(
+                    ::std::hash::Hash::hash(&#ty_param_ids, &mut hasher);
+                )*
+
+                let value = <::std::collections::hash_map::DefaultHasher as ::std::hash::Hasher>::finish(&hasher);
+
                 ::accursed_unutterable_type_id::AccursedUnutterableTypeId::__internal_new(
                     ::accursed_unutterable_type_id::InternalAccursedUnutterableTypeId::__internal_new(
-                        #new_value
+                        #new_value, value,
                     )
                 )
             }

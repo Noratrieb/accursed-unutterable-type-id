@@ -27,7 +27,10 @@
 //! println!("{type_id:?}")
 //! ```
 
-use std::fmt::{Debug, Formatter};
+use std::{
+    fmt::{Debug, Formatter},
+    hash::Hash,
+};
 
 pub use accursed_unutterable_type_id_derive::AccursedUnutterablyTypeIdentified;
 
@@ -66,30 +69,30 @@ impl AccursedUnutterableTypeId {
 #[doc(hidden)]
 #[cfg(debug_assertions)]
 // we do a little trolling
-pub struct InternalAccursedUnutterableTypeId(u128, u64);
+pub struct InternalAccursedUnutterableTypeId(u128, u64, u64);
 
 #[derive(Clone, Copy, PartialEq, Eq, Hash)]
 #[doc(hidden)]
 #[cfg(not(debug_assertions))]
-pub struct InternalAccursedUnutterableTypeId(u64);
+pub struct InternalAccursedUnutterableTypeId(u64, u64);
 
 #[cfg(debug_assertions)]
 impl InternalAccursedUnutterableTypeId {
-    pub fn __internal_new(n: u64) -> Self {
-        Self(0, n)
+    pub fn __internal_new(s: u64, g: u64) -> Self {
+        Self(0, s, g)
     }
-    fn inner(self) -> u64 {
-        self.1
+    fn inner(self) -> (u64, u64) {
+        (self.1, self.2)
     }
 }
 
 #[cfg(not(debug_assertions))]
 impl InternalAccursedUnutterableTypeId {
-    pub fn __internal_new(n: u64) -> Self {
-        Self(n)
+    pub fn __internal_new(s: u64, g: u64) -> Self {
+        Self(s, g)
     }
-    fn inner(self) -> u64 {
-        self.0
+    fn inner(self) -> (u64, u64) {
+        (self.0, self.1)
     }
 }
 
@@ -130,8 +133,8 @@ mod __doctest {
     /// use accursed_unutterable_type_id::AccursedUnutterablyTypeIdentified;
     ///
     /// #[derive(AccursedUnutterablyTypeIdentified)]
-    /// struct Uwu<T: 'static, const N: usize> {
-    ///     _x: [T; N],
+    /// struct Uwu<T: 'static, /* const N: usize */> {
+    ///     _x: [T; /* N */ 0],
     /// }
     /// ```
     mod complex {}
@@ -142,8 +145,8 @@ mod __doctest {
     /// trait Sussy {}
     ///
     /// #[derive(AccursedUnutterablyTypeIdentified)]
-    /// struct Uwu<T: Sussy, const N: usize> {
-    ///     _x: [T; N],
+    /// struct Uwu<T: Sussy> {
+    ///     _x: T,
     /// }
     /// ```
     mod type_bounds {}
@@ -167,4 +170,21 @@ mod __doctest {
     /// }
     /// ```
     mod where_clause {}
+
+    /// ```
+    /// use accursed_unutterable_type_id::{AccursedUnutterableTypeId as Id, AccursedUnutterablyTypeIdentified};
+    ///
+    /// #[derive(AccursedUnutterablyTypeIdentified)]
+    /// struct Uwu<T> {
+    ///     _x: T,
+    /// }
+    ///
+    /// #[derive(AccursedUnutterablyTypeIdentified)]
+    /// struct A;
+    /// #[derive(AccursedUnutterablyTypeIdentified)]
+    /// struct B;
+    ///
+    /// assert_ne!(Id::of::<Uwu<A>>(), Id::of::<Uwu<B>>());
+    /// ```
+    mod type_param {}
 }
