@@ -1,6 +1,6 @@
 [package]
 name = "accursed-unutterable-type-id-derive"
-version = "0.0.0-pre.cursed"
+version = "0.0.0-pre.ohno"
 description = "derive macro for accursed-unutterable-type-id"
 authors = ["Nilstrieb"]
 license = "MIT"

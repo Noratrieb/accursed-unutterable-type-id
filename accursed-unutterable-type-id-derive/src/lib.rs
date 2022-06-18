@@ -12,7 +12,7 @@ const DEFAULT_FILE_NAME: &str =
     "accursed-unutterable-type-id-global-store-oh-god-is-this-cursed-dont-touch-it";
 
 #[proc_macro_derive(AccursedUnutterablyTypeIdentified)]
-pub fn my_macro(input: TokenStream) -> TokenStream {
+pub fn derive_accursed_unutterable_type_identified(input: TokenStream) -> TokenStream {
     let input = parse_macro_input!(input as DeriveInput);
 
     let dir_path = match env::var("ACCURSED_UNUTTERABLE_TYPE_ID_DIR") {
@@ -103,6 +103,15 @@ pub fn my_macro(input: TokenStream) -> TokenStream {
 
     // Hand the output tokens back to the compiler
     TokenStream::from(expanded)
+}
+
+#[proc_macro_attribute]
+#[doc(hidden)]
+pub fn __foreign_accursed_unutterable_type_identified(
+    _attr: TokenStream,
+    item: TokenStream,
+) -> TokenStream {
+    todo!()
 }
 
 fn fail(msg: impl Into<String>) -> ! {

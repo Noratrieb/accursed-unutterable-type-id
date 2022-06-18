@@ -8,10 +8,10 @@ authors = ["Nilstrieb"]
 keywords = ["bad", "hack", "cursed"]
 repository = "https://github.com/Nilstrieb/accursed-unutterable-type-id"
 license = "MIT"
-version = "0.0.0-pre.cursed"
+version = "0.0.0-pre.ohno"
 edition = "2021"
 
 # See more keys and their definitions at https://doc.rust-lang.org/cargo/reference/manifest.html
 
 [dependencies]
-accursed-unutterable-type-id-derive = { path = "./accursed-unutterable-type-id-derive", version = "0.0.0-pre.cursed" }
+accursed-unutterable-type-id-derive = { path = "./accursed-unutterable-type-id-derive", version = "0.0.0-pre.ohno" }
