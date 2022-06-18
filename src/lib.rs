@@ -85,7 +85,7 @@ impl InternalAccursedUnutterableTypeId {
 
 #[cfg(not(debug_assertions))]
 impl InternalAccursedUnutterableTypeId {
-    pub fn new(n: u64) -> Self {
+    pub fn __internal_new(n: u64) -> Self {
         Self(n)
     }
     fn inner(self) -> u64 {
@@ -135,6 +135,18 @@ mod __doctest {
     /// }
     /// ```
     mod complex {}
+
+    /// ```
+    /// use accursed_unutterable_type_id::AccursedUnutterablyTypeIdentified;
+    ///
+    /// trait Sussy {}
+    ///
+    /// #[derive(AccursedUnutterablyTypeIdentified)]
+    /// struct Uwu<T: Sussy, const N: usize> {
+    ///     _x: [T; N],
+    /// }
+    /// ```
+    mod type_bounds {}
 
     /// ```
     /// use accursed_unutterable_type_id::AccursedUnutterablyTypeIdentified;

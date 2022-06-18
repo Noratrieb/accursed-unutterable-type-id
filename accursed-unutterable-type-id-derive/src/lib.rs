@@ -49,11 +49,9 @@ pub fn my_macro(input: TokenStream) -> TokenStream {
     let name = input.ident;
     let generics1 = input.generics.params.iter().map(|p| match p {
         GenericParam::Type(ty) => {
-            if ty.bounds.is_empty() {
-                quote!(#ty: 'static)
-            } else {
-                quote!(#ty + 'static)
-            }
+            let name = &ty.ident;
+            let bounds = ty.bounds.iter();
+            quote!(#name: #(#bounds +)* 'static)
         }
         other => other.to_token_stream(),
     });
