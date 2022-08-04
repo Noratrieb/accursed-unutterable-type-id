@@ -45,7 +45,7 @@ pub unsafe trait AccursedUnutterablyTypeIdentified: 'static {
     fn type_id() -> AccursedUnutterableTypeId;
 }
 
-/// A unique type id for a type. A fancier (less fancy) [`std::any::TypeId]`] without any
+/// A unique type id for a type. A fancier (less fancy) [`std::any::TypeId`] without any
 /// internal compiler magic!
 ///
 /// It can easily be derived for your type. The derive is the only way to implement this trait.
