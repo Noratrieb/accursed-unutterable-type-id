@@ -109,7 +109,7 @@ pub fn derive_accursed_unutterable_type_identified(input: TokenStream) -> TokenS
 #[doc(hidden)]
 pub fn __foreign_accursed_unutterable_type_identified(
     _attr: TokenStream,
-    item: TokenStream,
+    _item: TokenStream,
 ) -> TokenStream {
     todo!()
 }

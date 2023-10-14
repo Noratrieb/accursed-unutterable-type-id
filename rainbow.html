@@ -1,0 +1,106 @@
+<style>
+  .lgbt {
+    background: linear-gradient(
+      180deg,
+      #fe0000 16.66%,
+      #fd8c00 16.66%,
+      33.32%,
+      #ffe500 33.32%,
+      49.98%,
+      #119f0b 49.98%,
+      66.64%,
+      #0644b3 66.64%,
+      83.3%,
+      #c22edc 83.3%
+    );
+  }
+  .asexual {
+    background: linear-gradient(
+      180deg,
+      #181818 25%,
+      #a3a3a3 25%,
+      50%,
+      #ffffff 50%,
+      75%,
+      #800080 75%
+    );
+  }
+  .bisexual {
+    background: linear-gradient(
+      180deg,
+      #d60270 40%,
+      #9b4f96 40%,
+      60%,
+      #0038a8 60%
+    );
+  }
+  .aromantic {
+    background: linear-gradient(
+      180deg,
+      #39a33e 20%,
+      #a2cf72 20%,
+      40%,
+      #ffffff 40%,
+      60%,
+      #a3a3a3 60%,
+      80%,
+      #181818 80%
+    );
+  }
+  .nonbinary {
+    background: linear-gradient(
+      180deg,
+      #fff430 25%,
+      #ffffff 25%,
+      50%,
+      #9c59d1 50%,
+      75%,
+      #181818 75%
+    );
+  }
+  .transgender {
+    background: linear-gradient(
+      180deg,
+      #5bcefa 20%,
+      #f5a9b8 20%,
+      40%,
+      #ffffff 40%,
+      60%,
+      #f5a9b8 60%,
+      80%,
+      #5bcefa 80%
+    );
+  }
+  .genderqueer {
+    background: linear-gradient(
+      180deg,
+      #b57edc 33.33%,
+      #ffffff 33.33%,
+      66.66%,
+      #4a8123 66.66%
+    );
+  }
+  .flag {
+    opacity: 0.5;
+  }
+</style>
+<script>
+  window.onload = () => {
+    const things = [
+      "lgbt",
+      "asexual",
+      "bisexual",
+      "aromantic",
+      "nonbinary",
+      "transgender",
+      "genderqueer",
+    ];
+    const selectors = ".struct, .trait, .derive, code, li";
+    for (const item of document.querySelectorAll(selectors)) {
+      const queer = Math.random();
+      const idx = Math.floor(queer * things.length);
+      item.classList.add(things[idx]);
+      item.classList.add("flag");
+    }
+  };
+</script>

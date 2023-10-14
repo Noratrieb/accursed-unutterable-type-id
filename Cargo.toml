@@ -15,3 +15,6 @@ edition = "2021"
 
 [dependencies]
 accursed-unutterable-type-id-derive = { path = "./accursed-unutterable-type-id-derive", version = "0.0.0-pre.ohno" }
+
+[package.metadata.docs.rs]
+rustdoc-args = ["--html-in-header", "something i guess"]
