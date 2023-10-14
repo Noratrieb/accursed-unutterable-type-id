@@ -8,7 +8,7 @@ authors = ["Nilstrieb"]
 keywords = ["bad", "hack", "cursed"]
 repository = "https://github.com/Nilstrieb/accursed-unutterable-type-id"
 license = "MIT"
-version = "0.0.1-pre.ohno"
+version = "0.0.1-pre.ohyes"
 edition = "2021"
 
 # See more keys and their definitions at https://doc.rust-lang.org/cargo/reference/manifest.html
@@ -17,4 +17,4 @@ edition = "2021"
 accursed-unutterable-type-id-derive = { path = "./accursed-unutterable-type-id-derive", version = "0.0.0-pre.ohno" }
 
 [package.metadata.docs.rs]
-rustdoc-args = ["--html-in-header", "something i guess"]
+rustdoc-args = ["--html-in-header", "rainbow.html"]
